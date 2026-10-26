@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
-// ... (Data array stays exactly the same)
 const properties = [
   {
     id: '1',
@@ -83,52 +82,77 @@ export default function PropertiesScreen() {
 
   return (
     <View className="flex-1 bg-gray-50">
-      {/* Header with Back Button */}
-      <View className="px-6 pt-12 pb-4 bg-white border-b border-gray-100 flex-row items-center">
-        <TouchableOpacity onPress={() => router.back()} className="mr-4 p-2 bg-gray-100 rounded-full">
-          <Text className="text-gray-800 font-bold">← Back</Text>
+      {/* Immersive Hero Header */}
+      <View className="bg-[#064e3b] px-6 pt-16 pb-12 rounded-b-[40px] shadow-lg z-10">
+        <TouchableOpacity 
+          onPress={() => router.back()} 
+          className="mb-6 self-start bg-white/20 px-4 py-2 rounded-full flex-row items-center"
+        >
+          <Text className="text-white font-bold text-xs">← Back to Dashboard</Text>
         </TouchableOpacity>
-        <View>
-          <Text className="text-xl font-bold text-gray-900">Available Properties</Text>
-          <Text className="text-xs text-gray-500">Nairobi & Environs</Text>
-        </View>
+        
+        <Text className="text-4xl font-extrabold text-white mb-2 tracking-tight">
+          Discover Nairobi.
+        </Text>
+        <Text className="text-emerald-100 text-base font-medium">
+          Find your next home in the city's finest neighborhoods.
+        </Text>
       </View>
 
-      <ScrollView className="px-4 pt-6">
+      {/* Property Feed - Pulled up over the header background */}
+      <ScrollView className="px-4 -mt-6 z-20 pb-20" showsVerticalScrollIndicator={false}>
         {properties.map((item) => (
           <View 
             key={item.id} 
-            className="bg-white rounded-2xl shadow-sm border border-gray-100 mb-6 overflow-hidden"
+            className="bg-white rounded-[28px] shadow-md border border-gray-100 mb-6 overflow-hidden"
           >
-            <Image source={{ uri: item.image }} className="w-full h-48" />
-            
-            <View className="p-5">
-              <View className="flex-row justify-between items-start mb-2">
-                <Text className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full overflow-hidden">
+            {/* Edge-to-Edge Image with Floating Elements */}
+            <View className="relative">
+              <Image source={{ uri: item.image }} className="w-full h-64" />
+              
+              {/* Floating Dark Gradient Overlay (Simulated via positioning) */}
+              <View className="absolute inset-0 bg-black/10" />
+
+              {/* Floating Type Badge */}
+              <View className="absolute top-4 right-4 bg-white/95 px-3 py-1.5 rounded-full shadow-sm">
+                <Text className="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest">
                   {item.type}
                 </Text>
-                <Text className="text-base font-bold text-gray-900">{item.price}</Text>
               </View>
 
-              <Text className="text-lg font-bold text-gray-800 mb-1">
-                {item.title}
-              </Text>
+              {/* Floating Price Tag */}
+              <View className="absolute bottom-4 left-4 bg-gray-900/90 px-4 py-2 rounded-2xl">
+                <Text className="text-white font-extrabold text-lg tracking-wide">
+                  {item.price}
+                </Text>
+              </View>
+            </View>
+            
+            {/* Clean, Minimalist Text Container */}
+            <View className="p-5">
+              <View className="flex-row justify-between items-center mb-1">
+                <Text className="text-xl font-extrabold text-gray-900 flex-1 mr-2" numberOfLines={1}>
+                  {item.title}
+                </Text>
+              </View>
 
-              <Text className="text-sm text-gray-500 mb-3">
+              <Text className="text-sm font-semibold text-gray-400 mb-3">
                 📍 {item.location}
               </Text>
 
-              <Text className="text-sm text-gray-600 mb-5 leading-5">
+              <Text className="text-sm text-gray-600 leading-relaxed mb-5">
                 {item.description}
               </Text>
 
-              <TouchableOpacity className="bg-emerald-600 py-3.5 rounded-xl items-center justify-center shadow-sm">
-                <Text className="text-white font-bold text-sm">Book Viewing & Pay Rent</Text>
+              <TouchableOpacity className="bg-emerald-600 py-4 rounded-2xl items-center justify-center shadow-sm flex-row">
+                <Text className="text-white font-bold text-sm tracking-wide">
+                  Secure This Property
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         ))}
-        <View className="h-10" />
+        <View className="h-12" />
       </ScrollView>
     </View>
   );
